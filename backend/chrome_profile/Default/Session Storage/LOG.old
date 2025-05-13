@@ -1,0 +1,13 @@
+2025/05/21-16:08:47.525 4170 Reusing MANIFEST C:\Users\USER\Documents\Sistema PNTP\backend\chrome_profile\Default\Session Storage/MANIFEST-000001
+2025/05/21-16:08:47.528 4170 Recovering log #10
+2025/05/21-16:08:47.531 4170 Level-0 table #12: started
+2025/05/21-16:08:47.539 4170 Level-0 table #12: 261754 bytes OK
+2025/05/21-16:08:47.546 4170 Delete type=0 #10
+2025/05/21-16:08:47.547 3df8 Compacting 4@0 + 0@1 files
+2025/05/21-16:08:47.567 3df8 Generated table #14@0: 7 keys, 261501 bytes
+2025/05/21-16:08:47.568 3df8 Compacted 4@0 + 0@1 files => 261501 bytes
+2025/05/21-16:08:47.569 3df8 compacted to: files[ 0 1 0 0 0 0 0 ]
+2025/05/21-16:08:47.570 3df8 Delete type=2 #3
+2025/05/21-16:08:47.570 3df8 Delete type=2 #6
+2025/05/21-16:08:47.570 3df8 Delete type=2 #9
+2025/05/21-16:08:47.570 3df8 Delete type=2 #12

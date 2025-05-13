@@ -1,0 +1,3 @@
+ID,Pergunta,Classificação,Fundamentação,Atende,Disponibilidade,Atualidade,Série Histórica,Gravação de Relatórios,Filtro de Pesquisa,Link de Evidência,Observação
+1.1,Possui sítio oficial próprio na internet?,Essencial,"Art. 48, §1º, II, da LC nº 101/00 e arts. 3º, III, 6º, I, e 8º, §2º, da Lei nº 12.527/2011 – LAI.",Sim,Sim,Não se Aplica,Não se Aplica,Não se Aplica,Não se Aplica,https://www.manaus.am.gov.br/,Site oficial verificado e funcionando.
+1.2,Possui portal da transparência próprio ou compartilhado na internet?,Essencial,"Art. 48, §1º, II, da LC nº 101/00 e arts. 3º, III, 6º, I, e 8º, §2º, da Lei nº 12.527/2011 – LAI.",Sim,Sim,True,False,True,True,https://transparencia.manaus.am.gov.br/,Portal de transparência encontrado e funcionando.

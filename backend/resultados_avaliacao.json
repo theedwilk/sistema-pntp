@@ -1,0 +1,64 @@
+{
+    "Prefeitura de Manaus": {
+        "orgao": "Prefeitura de Manaus",
+        "site_oficial": {
+            "orgao": "Prefeitura de Manaus",
+            "tipo": "site_oficial",
+            "url": null,
+            "fonte": null,
+            "status": "Não encontrado",
+            "alternativas": []
+        },
+        "portal_transparencia": {
+            "orgao": "Prefeitura de Manaus",
+            "tipo": "portal_transparencia",
+            "url": null,
+            "fonte": null,
+            "status": "Não encontrado",
+            "alternativas": []
+        },
+        "verificacao_site": {
+            "status": "Não Atende",
+            "observacoes": "Site oficial não encontrado",
+            "evidencias": []
+        },
+        "resultados": [
+            {
+                "id": "1.1",
+                "pergunta": "Possui sítio oficial próprio na internet?",
+                "classificacao": "Essencial",
+                "fundamentacao": "Art. 48, §1º, II, da LC nº 101/00 e arts. 3º, III, 6º, I, e 8º, §2º, da Lei nº 12.527/2011 – LAI.",
+                "atende": false,
+                "disponibilidade": false,
+                "atualidade": "Não se Aplica",
+                "serieHistorica": "Não se Aplica",
+                "gravacaoRelatorios": "Não se Aplica",
+                "filtroPesquisa": "Não se Aplica",
+                "linkEvidencia": "",
+                "observacao": "Site oficial não encontrado"
+            },
+            {
+                "id": "1.2",
+                "pergunta": "Possui portal da transparência próprio ou compartilhado na internet?",
+                "classificacao": "Essencial",
+                "fundamentacao": "Art. 48, §1º, II, da LC nº 101/00 e arts. 3º, III, 6º, I, e 8º, §2º, da Lei nº 12.527/2011 – LAI.",
+                "atende": false,
+                "disponibilidade": false,
+                "atualidade": "Não Verificado",
+                "serieHistorica": "Não Verificado",
+                "gravacaoRelatorios": "Não Verificado",
+                "filtroPesquisa": "Não Verificado",
+                "linkEvidencia": "",
+                "observacao": "Portal de transparência não encontrado"
+            }
+        ],
+        "relatorios": {
+            "txt": "relatorios\\avaliacao_Prefeitura_de_Manaus_20250514_163423.txt",
+            "csv": "relatorios\\avaliacao_Prefeitura_de_Manaus_20250514_163423.csv",
+            "json": "relatorios\\avaliacao_Prefeitura_de_Manaus_20250514_163423.json",
+            "pdf": "relatorios\\avaliacao_Prefeitura_de_Manaus_20250514_163423.pdf",
+            "xml": "relatorios\\avaliacao_Prefeitura_de_Manaus_20250514_163423.xml",
+            "ods": "relatorios\\avaliacao_Prefeitura_de_Manaus_20250514_163423.ods"
+        }
+    }
+}

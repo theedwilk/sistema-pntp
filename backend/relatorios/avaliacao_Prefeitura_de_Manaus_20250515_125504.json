@@ -1,0 +1,34 @@
+{
+    "orgao": "Prefeitura de Manaus",
+    "data_avaliacao": "2025-05-15 12:55:04",
+    "resultados": [
+        {
+            "id": "1.1",
+            "pergunta": "Possui sítio oficial próprio na internet?",
+            "classificacao": "Essencial",
+            "fundamentacao": "Art. 48, §1º, II, da LC nº 101/00 e arts. 3º, III, 6º, I, e 8º, §2º, da Lei nº 12.527/2011 – LAI.",
+            "atende": true,
+            "disponibilidade": true,
+            "atualidade": "Não se Aplica",
+            "serieHistorica": "Não se Aplica",
+            "gravacaoRelatorios": "Não se Aplica",
+            "filtroPesquisa": "Não se Aplica",
+            "linkEvidencia": "https://www.manaus.am.gov.br/",
+            "observacao": "Site oficial verificado e funcionando."
+        },
+        {
+            "id": "1.2",
+            "pergunta": "Possui portal da transparência próprio ou compartilhado na internet?",
+            "classificacao": "Essencial",
+            "fundamentacao": "Art. 48, §1º, II, da LC nº 101/00 e arts. 3º, III, 6º, I, e 8º, §2º, da Lei nº 12.527/2011 – LAI.",
+            "atende": true,
+            "disponibilidade": true,
+            "atualidade": true,
+            "serieHistorica": false,
+            "gravacaoRelatorios": true,
+            "filtroPesquisa": true,
+            "linkEvidencia": "https://transparencia.manaus.am.gov.br/",
+            "observacao": "Portal de transparência encontrado e funcionando."
+        }
+    ]
+}

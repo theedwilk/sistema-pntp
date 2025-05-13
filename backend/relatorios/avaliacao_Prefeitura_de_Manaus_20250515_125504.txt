@@ -1,0 +1,23 @@
+AVALIAÇÃO DE TRANSPARÊNCIA - Prefeitura de Manaus
+Data da avaliação: 15/05/2025 12:55:04
+
+ID: 1.1
+Pergunta: Possui sítio oficial próprio na internet?
+Classificação: Essencial
+Fundamentação: Art. 48, §1º, II, da LC nº 101/00 e arts. 3º, III, 6º, I, e 8º, §2º, da Lei nº 12.527/2011 – LAI.
+Atende: Sim
+Observação: Site oficial verificado e funcionando.
+Link de Evidência: https://www.manaus.am.gov.br/
+
+--------------------------------------------------
+
+ID: 1.2
+Pergunta: Possui portal da transparência próprio ou compartilhado na internet?
+Classificação: Essencial
+Fundamentação: Art. 48, §1º, II, da LC nº 101/00 e arts. 3º, III, 6º, I, e 8º, §2º, da Lei nº 12.527/2011 – LAI.
+Atende: Sim
+Observação: Portal de transparência encontrado e funcionando.
+Link de Evidência: https://transparencia.manaus.am.gov.br/
+
+--------------------------------------------------
+
