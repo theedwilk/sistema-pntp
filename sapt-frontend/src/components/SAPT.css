@@ -1,0 +1,69 @@
+/* SAPT.css */
+.sapt-container {
+  padding: 20px;
+}
+
+.table {
+  font-size: 0.9rem;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.table-responsive {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.text-success {
+  font-weight: bold;
+}
+
+.text-danger {
+  font-weight: bold;
+}
+
+/* Estilo para as diferentes dimensões */
+td:first-child {
+  font-weight: bold;
+}
+
+/* Estilo para os IDs */
+td:nth-child(2) {
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Estilo para a classificação */
+td:nth-child(5) {
+  white-space: nowrap;
+}
+
+/* Estilo para a disponibilidade */
+td:nth-child(6) {
+  text-align: center;
+}
+
+/* Estilo para o cabeçalho da matriz */
+.matriz-header {
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.matriz-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.matriz-header select {
+  min-width: 300px;
+}

@@ -68,5 +68,12 @@
       "https://www.manaus.am.gov.br/",
       "https://www.minecraft.net/pt-br"
     ]
+  },
+  "Tribunal de Justiça do Amazonas site oficial": {
+    "timestamp": "2025-05-22T12:20:36.052033",
+    "results": [
+      "https://www.tjam.jus.br/index.php/consulta-processual-tjam",
+      "https://consultasaj.tjam.jus.br/esaj/portal.do?servico=190090"
+    ]
   }
 }

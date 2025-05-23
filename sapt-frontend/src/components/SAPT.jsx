@@ -1,3 +1,4 @@
+// SAPT.jsx - Versão completa
 import React, { useState, useEffect } from "react";
 
 // LISTA OS 62 MUNICÍPIOS do Amazonas
@@ -17,6 +18,74 @@ const municipiosAmazonas = [
 const prefeiturasAmazonas = municipiosAmazonas.map(nome => `Prefeitura de ${nome}`);
 const camarasAmazonas = municipiosAmazonas.map(nome => `Câmara Municipal de ${nome}`);
 
+// Mapeamento de dimensões para os critérios
+const dimensoesCriterios = {
+  "1.1": "Informações Prioritárias",
+  "1.2": "Informações Prioritárias",
+  "1.3": "Informações Prioritárias",
+  "1.4": "Informações Prioritárias",
+  "2.1": "Informações Institucionais",
+  "2.2": "Informações Institucionais",
+  "2.3": "Informações Institucionais",
+  "2.4": "Informações Institucionais",
+  "2.5": "Informações Institucionais",
+  "2.6": "Informações Institucionais",
+  "2.7": "Informações Institucionais",
+  "2.8": "Informações Institucionais",
+  "2.9": "Informações Institucionais",
+  "3.1": "Receitas",
+  "3.2": "Receitas",
+  "4.1": "Despesas",
+  "4.2": "Despesas",
+  "5.1": "Convênios e Transferências",
+  "5.2": "Convênios e Transferências",
+  "5.3": "Convênios e Transferências",
+  "6.1": "Recursos Humanos",
+  "6.2": "Recursos Humanos",
+  "6.3": "Recursos Humanos",
+  "6.4": "Recursos Humanos",
+  "6.5": "Recursos Humanos",
+  "6.6": "Recursos Humanos",
+  "7.1": "Diárias",
+  "7.2": "Diárias",
+  "8.1": "Licitações",
+  "8.2": "Licitações",
+  "8.3": "Licitações",
+  "8.4": "Licitações",
+  "8.5": "Licitações",
+  "8.7": "Licitações",
+  "9.1": "Contratos",
+  "9.2": "Contratos",
+  "9.3": "Contratos",
+  "10.2": "Obras",
+  "11.3": "Planejamento e Prestação de contas",
+  "11.5": "Planejamento e Prestação de contas",
+  "11.7": "Planejamento e Prestação de contas",
+  "12.1": "Serviço de Informação ao Cidadão - SIC",
+  "12.2": "Serviço de Informação ao Cidadão - SIC",
+  "12.3": "Serviço de Informação ao Cidadão - SIC",
+  "12.4": "Serviço de Informação ao Cidadão - SIC",
+  "12.5": "Serviço de Informação ao Cidadão - SIC",
+  "12.6": "Serviço de Informação ao Cidadão - SIC",
+  "12.7": "Serviço de Informação ao Cidadão - SIC",
+  "12.8": "Serviço de Informação ao Cidadão - SIC",
+  "12.9": "Serviço de Informação ao Cidadão - SIC",
+  "13.1": "Acessibilidade",
+  "13.2": "Acessibilidade",
+  "13.3": "Acessibilidade",
+  "13.4": "Acessibilidade",
+  "13.5": "Acessibilidade",
+  "14.1": "Ouvidorias",
+  "14.2": "Ouvidorias",
+  "14.3": "Ouvidorias",
+  "15.1": "Lei Geral de Proteção de Dados (LGPD) e Governo Digital",
+  "15.2": "Lei Geral de Proteção de Dados (LGPD) e Governo Digital",
+  "15.3": "Lei Geral de Proteção de Dados (LGPD) e Governo Digital",
+  "15.4": "Lei Geral de Proteção de Dados (LGPD) e Governo Digital",
+  "15.5": "Lei Geral de Proteção de Dados (LGPD) e Governo Digital",
+  "15.6": "Lei Geral de Proteção de Dados (LGPD) e Governo Digital"
+};
+
 export default function SAPT() {
   const [esfera, setEsfera] = useState('');
   const [matriz, setMatriz] = useState('');
@@ -30,6 +99,7 @@ export default function SAPT() {
   const [progress, setProgress] = useState(0);
   const [totalPerguntas, setTotalPerguntas] = useState(0);
   const [perguntaAtual, setPerguntaAtual] = useState('');
+  const [eventSource, setEventSource] = useState(null);
 
   // Atualiza Matrizes de acordo com a esfera
   useEffect(() => {
@@ -102,81 +172,133 @@ export default function SAPT() {
     }
   }, [esfera, matriz]);
 
-  // Busca os resultados no backend
-  async function handleBuscar() {
-    if (!esfera || !matriz || !orgao) return;
-    
-    setIsLoading(true);
-    setResultados([]);
-    setStatusMessage('Iniciando avaliação...');
-    setProgress(0);
-    setView('resultados');
+  // Limpar EventSource quando o componente é desmontado
+  useEffect(() => {
+    return () => {
+      if (eventSource) {
+        eventSource.close();
+      }
+    };
+  }, [eventSource]);
 
+  // Função para parar a consulta
+  const pararConsulta = async () => {
+    if (eventSource) {
+      eventSource.close();
+      setEventSource(null);
+    }
+    
+    // Enviar solicitação para o backend cancelar o processamento
     try {
-      // Primeira requisição POST para iniciar a varredura
-      const initResponse = await fetch('http://localhost:5000/api/avaliar-transparencia', {
+      const response = await fetch('http://localhost:5000/api/cancelar-avaliacao', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ esfera, matriz, orgao })
-      });
-      
-      if (!initResponse.ok) {
-        throw new Error('Falha ao iniciar avaliação');
-      }
-      
-      const initData = await initResponse.json();
-      setTotalPerguntas(initData.totalPerguntas || 60); // Fallback para 60 se não receber o total
-      setStatusMessage('Buscando site oficial e portal de transparência...');
-      
-      // Depois inicia o EventSource para receber os resultados
-      const eventSource = new EventSource('http://localhost:5000/api/stream-resultados');
-      
-      eventSource.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        
-        // Se for uma mensagem de status
-        if (data.type === 'status') {
-          setStatusMessage(data.message);
-          if (data.progress) {
-            setProgress(data.progress);
-          }
-          if (data.perguntaAtual) {
-            setPerguntaAtual(data.perguntaAtual);
-          }
-        } 
-        // Se for um resultado de pergunta
-        else {
-          setResultados(prev => [...prev, data]);
-          setProgress(prev => Math.min(prev + (100 / totalPerguntas), 99));
         }
-      };
-      
-      eventSource.onerror = (error) => {
-        console.error('Erro na conexão SSE:', error);
-        eventSource.close();
-        setIsLoading(false);
-        setStatusMessage('Erro na conexão. Tente novamente.');
-      };
-      
-      // Quando o EventSource for fechado pelo servidor (todos os resultados foram enviados)
-      eventSource.addEventListener('complete', (event) => {
-        eventSource.close();
-        setIsLoading(false);
-        setProgress(100);
-        setStatusMessage('Avaliação concluída!');
       });
       
-      return () => {
-        eventSource.close();
-      };
+      if (response.ok) {
+        setIsLoading(false);
+        setStatusMessage('Avaliação interrompida pelo usuário.');
+      }
     } catch (error) {
-      console.error('Erro:', error);
+      console.error('Erro ao cancelar avaliação:', error);
       setIsLoading(false);
-      setStatusMessage('Erro ao iniciar avaliação. Tente novamente.');
+      setStatusMessage('Avaliação interrompida, mas pode haver processamento residual no servidor.');
     }
+  };
+
+  // Busca os resultados no backend
+  // Busca os resultados no backend
+async function handleBuscar() {
+  if (!esfera || !matriz || !orgao) return;
+  
+  setIsLoading(true);
+  setResultados([]);
+  setStatusMessage('Iniciando avaliação...');
+  setProgress(0);
+  setView('resultados');
+
+  try {
+    // Primeira requisição POST para iniciar a varredura
+    const initResponse = await fetch('http://localhost:5000/api/avaliar-transparencia', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ esfera, matriz, orgao })
+    });
+    
+    if (!initResponse.ok) {
+      throw new Error('Falha ao iniciar avaliação');
+    }
+    
+    const initData = await initResponse.json();
+    setTotalPerguntas(initData.totalPerguntas || 60); // Fallback para 60 se não receber o total
+    setStatusMessage('Buscando site oficial e portal de transparência...');
+    
+    // Depois inicia o EventSource para receber os resultados
+    const newEventSource = new EventSource('http://localhost:5000/api/stream-resultados');
+    setEventSource(newEventSource);
+    
+    newEventSource.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      
+      // Se for uma mensagem de status
+      if (data.type === 'status') {
+        setStatusMessage(data.message);
+        if (data.progress) {
+          setProgress(data.progress);
+        }
+        if (data.perguntaAtual) {
+          setPerguntaAtual(data.perguntaAtual);
+        }
+      } 
+      // Se for um resultado de pergunta
+      else {
+        // Adicionar a dimensão ao resultado
+        const resultadoComDimensao = {
+          ...data,
+          dimensao: data.dimensao || dimensoesCriterios[data.id] || "Outros"
+        };
+        
+        setResultados(prev => [...prev, resultadoComDimensao]);
+        setProgress(prev => Math.min(prev + (100 / totalPerguntas), 99));
+      }
+    };
+    
+    newEventSource.onerror = (error) => {
+      console.error('Erro na conexão SSE:', error);
+      newEventSource.close();
+      setEventSource(null);
+      setIsLoading(false);
+      setStatusMessage('Erro na conexão. Tente novamente.');
+    };
+    
+    // Quando o EventSource for fechado pelo servidor (todos os resultados foram enviados)
+    newEventSource.addEventListener('complete', (event) => {
+      newEventSource.close();
+      setEventSource(null);
+      setIsLoading(false);
+      setProgress(100);
+      setStatusMessage('Avaliação concluída!');
+    });
+    
+    // Tratar erros específicos
+    newEventSource.addEventListener('error', (event) => {
+      const data = JSON.parse(event.data || '{}');
+      newEventSource.close();
+      setEventSource(null);
+      setIsLoading(false);
+      setStatusMessage(`Erro: ${data.message || 'Ocorreu um erro durante a avaliação'}`);
+    });
+    
+  } catch (error) {
+    console.error('Erro:', error);
+    setIsLoading(false);
+    setStatusMessage('Erro ao iniciar avaliação. Tente novamente.');
   }
+}
 
   // --- VISUALIZAÇÃO ---
   if (view === 'filtros') {
@@ -254,18 +376,18 @@ export default function SAPT() {
   if (view === 'resultados') {
     // Calcular estatísticas
     const totalItens = resultados.length;
-    const atendidos = resultados.filter(item => item.atende).length;
+    const atendidos = resultados.filter(item => item.disponibilidade === true).length;
     const percentualAtendimento = totalItens > 0 ? Math.round((atendidos / totalItens) * 100) : 0;
     
     // Agrupar por classificação
     const totalEssenciais = resultados.filter(item => item.classificacao === 'Essencial').length;
-    const atendidosEssenciais = resultados.filter(item => item.classificacao === 'Essencial' && item.atende).length;
+    const atendidosEssenciais = resultados.filter(item => item.classificacao === 'Essencial' && item.disponibilidade === true).length;
     
     const totalObrigatorias = resultados.filter(item => item.classificacao === 'Obrigatória').length;
-    const atendidosObrigatorias = resultados.filter(item => item.classificacao === 'Obrigatória' && item.atende).length;
+    const atendidosObrigatorias = resultados.filter(item => item.classificacao === 'Obrigatória' && item.disponibilidade === true).length;
     
     const totalRecomendadas = resultados.filter(item => item.classificacao === 'Recomendada').length;
-    const atendidosRecomendadas = resultados.filter(item => item.classificacao === 'Recomendada' && item.atende).length;
+    const atendidosRecomendadas = resultados.filter(item => item.classificacao === 'Recomendada' && item.disponibilidade === true).length;
 
     return (
       <div className="min-h-screen bg-gray-100 py-8 px-4 flex flex-col items-center">
@@ -304,6 +426,14 @@ export default function SAPT() {
                     Verificando: {perguntaAtual}
                   </div>
                 )}
+                
+                {/* Botão para parar a consulta */}
+                <button
+                  onClick={pararConsulta}
+                  className="mt-3 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+                >
+                  Parar Consulta
+                </button>
               </div>
             )}
             
@@ -343,14 +473,20 @@ export default function SAPT() {
             )}
           </div>
           
+          {/* Cabeçalho da Matriz */}
+          <div className="mb-4">
+            <h3 className="text-xl font-bold text-blue-700">Matriz Comum</h3>
+          </div>
+          
           <div className="overflow-x-auto">
             <table className="w-full border divide-y text-sm">
               <thead>
                 <tr className="bg-gray-100">
+                  <th className="p-2 font-bold text-left">Dimensão</th>
                   <th className="p-2 font-bold text-left">ID</th>
-                  <th className="p-2 font-bold text-left">Pergunta</th>
+                  <th className="p-2 font-bold text-left">Critério</th>
+                  <th className="p-2 font-bold">Fundamentação</th>
                   <th className="p-2 font-bold">Classificação</th>
-                  <th className="p-2 font-bold">Atende</th>
                   <th className="p-2 font-bold">Disponibilidade</th>
                   <th className="p-2 font-bold">Atualidade</th>
                   <th className="p-2 font-bold">Série Histórica</th>
@@ -362,13 +498,10 @@ export default function SAPT() {
               <tbody>
                 {resultados.map((item, i) => (
                   <tr key={i} className={i % 2 === 0 ? 'bg-gray-50' : ''}>
+                    <td className="p-2 border-b">{item.dimensao}</td>
                     <td className="p-2 border-b">{item.id}</td>
-                    <td className="p-2 border-b">
-                      {item.pergunta}
-                      <div className="text-xs text-gray-500 mt-1">
-                        <strong>Fundamentação:</strong> {item.fundamentacao}
-                      </div>
-                    </td>
+                    <td className="p-2 border-b">{item.pergunta}</td>
+                    <td className="p-2 border-b text-xs">{item.fundamentacao}</td>
                     <td className="p-2 text-center border-b">
                       <span className={`px-2 py-1 rounded text-xs font-medium ${
                         item.classificacao === 'Essencial' ? 'bg-red-100 text-red-800' :
@@ -378,17 +511,15 @@ export default function SAPT() {
                         {item.classificacao}
                       </span>
                     </td>
-                    <td className="p-2 text-center border-b">{item.atende ? "✅" : "❌"}</td>
-                    <td className="p-2 text-center border-b">{item.disponibilidade ? "✅" : "❌"}</td>
-                    <td className="p-2 text-center border-b">{item.atualidade ? "✅" : "❌"}</td>
-                    <td className="p-2 text-center border-b">{item.serieHistorica ? "✅" : "❌"}</td>
-                    <td className="p-2 text-center border-b">{item.gravacaoRelatorios ? "✅" : "❌"}</td>
-                    <td className="p-2 text-center border-b">{item.filtroPesquisa ? "✅" : "❌"}</td>
+                    <td className="p-2 text-center border-b">{item.disponibilidade === true ? "✅" : "❌"}</td>
+                    <td className="p-2 text-center border-b">{item.atualidade === true ? "✅" : item.atualidade === false ? "❌" : "N/A"}</td>
+                    <td className="p-2 text-center border-b">{item.serieHistorica === true ? "✅" : item.serieHistorica === false ? "❌" : "N/A"}</td>
+                    <td className="p-2 text-center border-b">{item.gravacaoRelatorios === true ? "✅" : item.gravacaoRelatorios === false ? "❌" : "N/A"}</td>
+                    <td className="p-2 text-center border-b">{item.filtroPesquisa === true ? "✅" : item.filtroPesquisa === false ? "❌" : "N/A"}</td>
                     <td className="p-2 text-center border-b">
                       {item.linkEvidencia
                         ? <a 
                             href={item.linkEvidencia} 
-                             
                             rel="noopener noreferrer" 
                             className="text-blue-600 hover:underline"
                           >

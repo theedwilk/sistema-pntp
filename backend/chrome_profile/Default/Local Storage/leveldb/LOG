@@ -1,3 +1,13 @@
-2025/05/21-16:23:29.869 2754 Reusing MANIFEST C:\Users\USER\Documents\Sistema PNTP\backend\chrome_profile\Default\Local Storage\leveldb/MANIFEST-000001
-2025/05/21-16:23:29.880 2754 Recovering log #14
-2025/05/21-16:23:29.890 2754 Reusing old log C:\Users\USER\Documents\Sistema PNTP\backend\chrome_profile\Default\Local Storage\leveldb/000014.log 
+2025/05/22-12:20:01.376 4694 Reusing MANIFEST C:\Users\USER\Documents\Sistema PNTP\backend\chrome_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2025/05/22-12:20:01.391 4694 Recovering log #14
+2025/05/22-12:20:01.394 4694 Level-0 table #16: started
+2025/05/22-12:20:01.402 4694 Level-0 table #16: 19881 bytes OK
+2025/05/22-12:20:01.410 4694 Delete type=0 #14
+2025/05/22-12:20:01.413 47ec Compacting 4@0 + 0@1 files
+2025/05/22-12:20:01.452 47ec Generated table #18@0: 20 keys, 11421 bytes
+2025/05/22-12:20:01.452 47ec Compacted 4@0 + 0@1 files => 11421 bytes
+2025/05/22-12:20:01.453 47ec compacted to: files[ 0 1 1 0 0 0 0 ]
+2025/05/22-12:20:01.454 47ec Delete type=2 #7
+2025/05/22-12:20:01.454 47ec Delete type=2 #10
+2025/05/22-12:20:01.454 47ec Delete type=2 #13
+2025/05/22-12:20:01.455 47ec Delete type=2 #16
